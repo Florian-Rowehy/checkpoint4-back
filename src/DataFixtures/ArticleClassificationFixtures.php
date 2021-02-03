@@ -20,7 +20,7 @@ class ArticleClassificationFixtures extends BaseFixtures implements DependentFix
             $this->createMany(
                 ArticleClassification::class,
                 5,
-                function ($classification) use ($refArticleClassification, $ref) {
+                function ($classification, $i, $refArticleClassification) use ($ref) {
                     $classification
                         ->setName('classification'.$refArticleClassification)
                         ->setDepartement($this->getReference($ref))
