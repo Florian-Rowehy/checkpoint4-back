@@ -57,6 +57,12 @@ class Article
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ArticleClassification::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $articleClassification;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -178,6 +184,18 @@ class Article
         if ($this->categories->removeElement($category)) {
             $category->removeArticle($this);
         }
+
+        return $this;
+    }
+
+    public function getArticleClassification(): ?ArticleClassification
+    {
+        return $this->articleClassification;
+    }
+
+    public function setArticleClassification(?ArticleClassification $articleClassification): self
+    {
+        $this->articleClassification = $articleClassification;
 
         return $this;
     }
