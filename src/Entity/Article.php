@@ -52,9 +52,15 @@ class Article
      */
     private $orders;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="articles")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +150,33 @@ class Article
     {
         if ($this->orders->removeElement($order)) {
             $order->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeArticle($this);
         }
 
         return $this;
