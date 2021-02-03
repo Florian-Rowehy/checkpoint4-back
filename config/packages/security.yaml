@@ -26,7 +26,7 @@ security:
 
 
         api:
-            pattern: ^/api
+            pattern: ^/api/users
             stateless: true
             guard:
                 authenticators:
