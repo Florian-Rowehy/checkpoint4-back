@@ -26,6 +26,7 @@ class UserFixtures extends BaseFixtures
             ->setUsername('admin')
             ->setPassword($this->userPasswordEncoder->encodePassword($admin, 'password'))
             ->setEmail('admin@gmail.com')
+            ->setRoles(['ROLE_ADMIN'])
             ->setFirstname($this->faker->firstName)
             ->setLastname($this->faker->lastName)
             ->setAddress($this->faker->address)
