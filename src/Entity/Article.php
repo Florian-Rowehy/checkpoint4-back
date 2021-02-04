@@ -2,14 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={
+ *          "groups"={ "article:read" }
+ *     }
+ * )
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  */
 class Article
@@ -18,48 +25,58 @@ class Article
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"article:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"article:read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"article:read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"article:read"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"article:read"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"article:read"})
      */
     private $brand;
 
     /**
      * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="articles")
+     * @Groups({"article:read"})
      */
     private $orders;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="articles")
+     * @ApiFilter(SearchFilter::class, properties={"categories.name": "exact"})
+     * @Groups({"article:read"})
      */
     private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity=ArticleClassification::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"article:read"})
      */
     private $articleClassification;
 
