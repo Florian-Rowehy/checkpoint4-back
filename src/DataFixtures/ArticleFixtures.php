@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
-use App\Entity\ArticleClassification;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -39,7 +38,7 @@ class ArticleFixtures extends BaseFixtures implements DependentFixtureInterface
                         ->setName($this->faker->sentence)
                         ->setPrice($this->faker->randomFloat())
                         ->setDescription($this->faker->text)
-                        ->setImage($this->faker->imageUrl())
+                        ->setImage("https://placehold.it/350x150")
                         ->setBrand($this->getReference($ref))
                     ;
 
