@@ -10,11 +10,22 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\AddToCart;
+use App\Controller\GetCart;
 
 /**
  * @ApiResource(
  *     normalizationContext={
  *          "groups"={ "article:read" }
+ *     },
+ *     itemOperations={
+ *          "get",
+ *          "put",
+ *          "add_to_cart"={
+ *              "method"="POST",
+ *              "path"="/articles/{id}/add",
+ *              "controller"=AddToCart::class,
+ *          },
  *     }
  * )
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
